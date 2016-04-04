@@ -1,2 +1,26 @@
+# Ignore files
+.idea
+.zedstate
 *.pyc
+*.pyo
+*.db
+*.log
+*.swp
+*.swo
+*~
+*.orig
+*.eggs
+local.ini
+server.ini
+pip-selfcheck.json
 *.mp4
+
+# Ignore Folders
+include/
+bin/
+lib/
+local/
+build/
+dist/
+*.eggs/
+*.egg-info/
