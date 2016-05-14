@@ -28,7 +28,7 @@ def concat_videos(videos, save_as=None):
     save_as = concat_name(videos, save_as)
     dirname = os.path.dirname(save_as) or "."
     txt = "{}.txt".format(os.path.basename(save_as))
-    txt_location = "{}/{}".format(txt, dirname)
+    txt_location = "{}/{}".format(dirname,txt)
     with open(txt_location, "w") as fp:
         for vid in videos:
             if vid:
