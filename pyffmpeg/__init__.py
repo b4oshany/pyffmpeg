@@ -14,7 +14,7 @@ re_length = re.compile(length_regexp)
 
 
 def concat_name(videos, save_as=None):
-    vs = "|".join(videos)
+    vs = " ".join(videos)
 
     if not save_as:
         bn = "-".join([os.path.basename(n).split(".")[0] for n in videos if "." in n])
@@ -26,9 +26,18 @@ def concat_name(videos, save_as=None):
 
 def concat_videos(videos, save_as=None):
     save_as = concat_name(videos, save_as)
-    concat_cmd = "ffmpeg -i 'concat:%s' -c copy %s" % (
-        vs,
-        save_as
+    dirname = os.path.dirname(save_as) or "."
+    txt = "{}.txt".format(os.path.basename(save_as))
+    txt_location = "{}/{}".format(txt, dirname)
+    with open(txt_location, "w") as fp:
+        for vid in videos:
+            if vid:
+                fp.write("file %s\n" % vid)
+
+    concat_cmd = ("ffmpeg -f concat -safe 0 -i %s -c copy %s -y && rm %s") % (
+        txt_location,
+        save_as,
+        txt_location
     )
     print "---------"
     print concat_cmd
@@ -38,6 +47,7 @@ def concat_videos(videos, save_as=None):
         subprocess.call([concat_cmd],
                                   shell = True, stdout =
                                   subprocess.PIPE).stdout.read()
+
     except Exception as e:
         print e
         return ""
