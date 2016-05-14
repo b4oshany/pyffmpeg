@@ -24,7 +24,7 @@ def concat_name(videos, save_as=None):
     save_as = "%s/%s" % (dirn, save_as)
     return save_as
 
-def concat_videos(videos, save_as=None):
+def concat_videos(videos, save_as=None, remove_gen=True):
     save_as = concat_name(videos, save_as)
     dirname = os.path.dirname(save_as) or "."
     txt = "{}.txt".format(os.path.basename(save_as))
@@ -34,10 +34,10 @@ def concat_videos(videos, save_as=None):
             if vid:
                 fp.write("file %s\n" % vid)
 
-    concat_cmd = ("ffmpeg -f concat -safe 0 -i %s -c copy %s -y && rm %s") % (
+    concat_cmd = ("ffmpeg -f concat -safe 0 -i %s -c copy %s -y %s") % (
         txt_location,
         save_as,
-        txt_location
+        "&& rm {}".format(txt_location) if remove_gen else ""
     )
     print "---------"
     print concat_cmd
