@@ -15,9 +15,11 @@ try:
 except IOError:
     CHANGES = ''
 
-version = '0.8.0dev'
+version = '0.9.0'
 
-install_requires = []
+install_requires = [
+	"click"
+]
 
 class CustomInstallCommand(install):
     """Custom install setup to help run shell commands (outside shell) before installation"""
@@ -49,12 +51,16 @@ setup(
     url='https://github.com/b4oshany/voscrape',
     keywords='splitter videos ffmpeg',
     license="BSD-derived (http://www.repoze.org/LICENSE.txt)",
-    packages=["pyffmpeg"],
+    packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
     install_requires=install_requires,
     tests_require=[],
     dependency_links=[],
-    entry_points={},
+    entry_points={
+    	"console_scripts": [
+    		"video-info = scripts.scripts:getinfo"
+    	]
+    },
     extras_require={},
 )

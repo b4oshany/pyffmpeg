@@ -32,6 +32,19 @@ def resize_video(filename,width=320,height=240, save_as=None):
     	print e
 
 
+def get_video_info(filename):
+    info_cmd = "ffprobe -v quiet -print_format json -show_format -show_streams {}".format(filename)
+    try:
+	output = subprocess.Popen(info_cmd,
+				  shell = True,
+		                  stdout = subprocess.PIPE
+		                  ).stdout.read()
+	return json.loads(output)
+    except Exception as e:
+    	print e
+	return None
+
+
 def concat_videos(videos, save_as=None, remove_gen=True):
     save_as = concat_name(videos, save_as)
     dirname = os.path.dirname(save_as) or "."
