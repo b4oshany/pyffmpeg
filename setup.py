@@ -15,7 +15,7 @@ try:
 except IOError:
     CHANGES = ''
 
-version = '0.9.1'
+version = '0.9.2'
 
 install_requires = [
 	"click"
