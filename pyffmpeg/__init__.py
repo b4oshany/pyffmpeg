@@ -34,7 +34,7 @@ def concat_videos(videos, save_as=None, remove_gen=True):
             if vid:
                 fp.write("file %s\n" % vid)
 
-    concat_cmd = ("ffmpeg -f concat -safe 0 -i %s -c copy %s -y %s") % (
+    concat_cmd = ("ffmpeg -f concat -safe 0 -i %s -c:a copy %s -y %s") % (
         txt_location,
         save_as,
         "&& rm {}".format(txt_location) if remove_gen else ""
