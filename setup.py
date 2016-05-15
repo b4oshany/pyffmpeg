@@ -15,7 +15,7 @@ try:
 except IOError:
     CHANGES = ''
 
-version = '0.7.0dev'
+version = '0.8.0dev'
 
 install_requires = []
 

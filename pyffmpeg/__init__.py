@@ -24,6 +24,14 @@ def concat_name(videos, save_as=None):
     save_as = "%s/%s" % (dirn, save_as)
     return save_as
 
+def resize_video(filename,width=320,height=240, save_as=None):
+    resize_cmd = "ffmpeg -i {} -vf scale={}:{} {} -y".format(filename, width, height, save_as or filename)
+    try:
+    	subprocess.call([resize_cmd], shell=True)
+    except Exception as e:
+    	print e
+
+
 def concat_videos(videos, save_as=None, remove_gen=True):
     save_as = concat_name(videos, save_as)
     dirname = os.path.dirname(save_as) or "."
@@ -44,9 +52,7 @@ def concat_videos(videos, save_as=None, remove_gen=True):
     print "---------"
     print save_as
     try:
-        subprocess.call([concat_cmd],
-                                  shell = True, stdout =
-                                  subprocess.PIPE).stdout.read()
+        subprocess.call([concat_cmd], shell = True)
 
     except Exception as e:
         print e
