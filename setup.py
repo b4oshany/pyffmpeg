@@ -15,7 +15,7 @@ try:
 except IOError:
     CHANGES = ''
 
-version = '0.9.0'
+version = '0.9.1'
 
 install_requires = [
 	"click"
@@ -59,7 +59,8 @@ setup(
     dependency_links=[],
     entry_points={
     	"console_scripts": [
-    		"video-info = scripts.scripts:getinfo"
+    		"video-info = scripts.scripts:getinfo",
+    		"resize-video = scripts.scripts:resize_video"
     	]
     },
     extras_require={},
