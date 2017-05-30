@@ -27,22 +27,22 @@ def concat_name(videos, save_as=None):
 def resize_video(filename,width=320,height=240, save_as=None):
     resize_cmd = "ffmpeg -i {} -vf scale={}:{} {} -y".format(filename, width, height, save_as or filename)
     try:
-    	subprocess.call([resize_cmd], shell=True)
+        subprocess.call([resize_cmd], shell=True)
     except Exception as e:
-    	print e
+        print e
 
 
 def get_video_info(filename):
     info_cmd = "ffprobe -v quiet -print_format json -show_format -show_streams {}".format(filename)
     try:
-	output = subprocess.Popen(info_cmd,
-				  shell = True,
-		                  stdout = subprocess.PIPE
-		                  ).stdout.read()
-	return json.loads(output)
+        output = subprocess.Popen(info_cmd,
+                      shell = True,
+                              stdout = subprocess.PIPE
+                              ).stdout.read()
+        return json.loads(output)
     except Exception as e:
-    	print e
-	return None
+        print e
+    return None
 
 
 def concat_videos(videos, save_as=None, remove_gen=True):
@@ -112,15 +112,15 @@ def split_by_manifest(filename, manifest, vcodec="copy", acodec="copy",
             split_str = ""
             try:
                 split_start = video_config["start_time"]
-                split_length = video_config.get("end_time", None)
-                if not split_length:
-                    split_length = video_config["length"]
+                split_size = video_config.get("end_time", None)
+                if not split_size:
+                    split_size = video_config["length"]
                 filebase = video_config["rename_to"]
                 if fileext in filebase:
                     filebase = ".".join(filebase.split(".")[:-1])
 
                 split_str += " -ss " + str(split_start) + " -t " + \
-                    str(split_length) + \
+                    str(split_size) + \
                     " '"+ filebase + "." + fileext + \
                     "'"
                 print "########################################################"
@@ -143,9 +143,9 @@ def split_by_manifest(filename, manifest, vcodec="copy", acodec="copy",
 
 
 
-def split_by_seconds(filename, split_length, vcodec="copy", acodec="copy",
+def split_by_seconds(filename, split_size, vcodec="copy", acodec="copy",
                      **kwargs):
-    if split_length and split_length <= 0:
+    if split_size and split_size <= 0:
         print "Split length can't be 0"
         raise SystemExit
 
@@ -163,7 +163,7 @@ def split_by_seconds(filename, split_length, vcodec="copy", acodec="copy",
     else:
         print "Can't determine video length."
         raise SystemExit
-    split_count = int(math.ceil(video_length/float(split_length)))
+    split_count = int(math.ceil(video_length/float(split_size)))
     if(split_count == 1):
         print "Video length is less then the target split length."
         raise SystemExit
@@ -180,9 +180,9 @@ def split_by_seconds(filename, split_length, vcodec="copy", acodec="copy",
         if n == 0:
             split_start = 0
         else:
-            split_start = split_length * n
+            split_start = split_size * n
 
-        split_str += " -ss "+str(split_start)+" -t "+str(split_length) + \
+        split_str += " -ss "+str(split_start)+" -t "+str(split_size) + \
                     " '"+filebase + "-" + str(n) + "." + fileext + \
                     "'"
         print "About to run: "+split_cmd+split_str

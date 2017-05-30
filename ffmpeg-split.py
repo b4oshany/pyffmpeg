@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from optparse import OptionParser
-from pyffmpeg import split_by_manifest, split_by_manifest
+from pyffmpeg import split_by_manifest, split_by_seconds
 
 
 def main():

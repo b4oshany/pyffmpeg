@@ -15,10 +15,10 @@ try:
 except IOError:
     CHANGES = ''
 
-version = '0.9.2'
+version = '0.9.3'
 
 install_requires = [
-	"click"
+    "click"
 ]
 
 class CustomInstallCommand(install):
@@ -58,10 +58,10 @@ setup(
     tests_require=[],
     dependency_links=[],
     entry_points={
-    	"console_scripts": [
-    		"video-info = scripts.scripts:getinfo",
-    		"resize-video = scripts.scripts:resize_video"
-    	]
+        "console_scripts": [
+            "video-info = scripts.scripts:getinfo",
+            "resize-video = scripts.scripts:resize_video"
+        ]
     },
     extras_require={},
 )
